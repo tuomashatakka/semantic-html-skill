@@ -6,7 +6,7 @@ Getting this right is what keeps the DOM valid and the accessibility tree clean.
 
 ## Metadata content
 
-Elements belonging to the _metadata content_ category modify the presentation or the behavior of the rest of the document, set up links to other documents, or convey other _out-of-band_ information. Everything in the <head>, including the `<title>`, `<link>`, `<script>`, `<style>`, and the lesser used `<base>`, is metadata content. There is a `<meta>` element for metadata that cannot be represented by these other elements.
+Elements belonging to the _metadata content_ category modify the presentation or the behavior of the rest of the document, set up links to other documents, or convey other _out-of-band_ information. Everything in the `<head>`, including the `<title>`, `<link>`, `<script>`, `<style>`, and the lesser used `<base>`, is metadata content. There is a `<meta>` element for metadata that cannot be represented by these other elements.
 
 *Members:* `<base>`, `<link>`, `<meta>`, `<noscript>`, `<script>`, `<style>`, `<template>`, `<title>`
 
@@ -18,7 +18,7 @@ Flow content is a broad category that encompasses most elements that can go insi
 
 ## Sectioning content
 
-Sectioning content, a subset of flow content, creates a section in the current outline defining the scope of <header> and <footer> elements.
+Sectioning content, a subset of flow content, creates a section in the current outline defining the scope of `<header>` and `<footer>` elements.
 
 *Members:* `<article>`, `<aside>`, `<nav>`, `<section>`
 
@@ -60,17 +60,16 @@ Several elements are not a member of _any_ content category. These include:
 
 ## Script-supporting elements
 
-**Script-supporting elements** are elements that don't directly contribute to a document's rendered output. Instead, they serve to support scripts, either by containing or specifying script code directly or by specifying data that will be used by scripts. Nearly all elements, including those that only take specific elements (such as <ul>, which takes <li> elements), can contain script-supporting elements.
+**Script-supporting elements** are elements that don't directly contribute to a document's rendered output. Instead, they serve to support scripts, either by containing or specifying script code directly or by specifying data that will be used by scripts. Nearly all elements, including those that only take specific elements (such as `<ul>`, which takes `<li>` elements), can contain script-supporting elements.
 
 *Members:* `<script>`, `<template>`
 
 ## Form-associated content
 
-Form-associated content is a subset of flow content comprising elements that have a form owner and can be used everywhere flow content is expected. A form owner is either the containing <form> element or the `<form>` whose `id` is specified in the element's `form` attribute.
+Form-associated content is a subset of flow content comprising elements that have a form owner and can be used everywhere flow content is expected. A form owner is either the containing `<form>` element or the `<form>` whose `id` is specified in the element's `form` attribute.
 
 *Members:* `<button>`, `<fieldset>`, `<input>`, `<object>`, `<output>`, `<select>`, `<textarea>`, `<img>`, `<label>`, `<meter>`, `<progress>`
 
 ## Transparent content model
 
 In addition to the listed content categories, an element's content model may also be defined as "transparent". If an element X's permitted content is "transparent", then we look at the parent of X. We intersect the permitted content of X's parent with the content categories of X, and the result is what "transparent" means in this context. If the parent of X also has a transparent content model, then we continue up the tree until we find a non-transparent content model. When there's no such parent, "transparent" means "flow content".
-
