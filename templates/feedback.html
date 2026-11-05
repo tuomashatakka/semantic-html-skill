@@ -1,0 +1,50 @@
+<!doctype html>
+<!--
+  feedback — progress (task completion), meter (a measurement in a known range), output (computed result, implicit status), polite status vs assertive alert, aria-busy for loading regions.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Feedback – Templates</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <main id="main">
+    <h1>Upload</h1>
+
+    <section aria-labelledby="upload-h" aria-busy="true">
+      <h2 id="upload-h">Uploading files</h2>
+      <label for="upload-progress">report.pdf</label>
+      <progress id="upload-progress" max="100" value="62">62%</progress>
+      <!-- indeterminate: omit value -->
+      <label for="processing">Processing</label>
+      <progress id="processing"></progress>
+    </section>
+
+    <section aria-labelledby="storage-h">
+      <h2 id="storage-h">Storage</h2>
+      <label for="disk">Disk usage</label>
+      <meter id="disk" min="0" max="100" low="70" high="90" optimum="10" value="82">82% used</meter>
+      <p>82 GB of 100 GB used.</p>
+    </section>
+
+    <section aria-labelledby="calc-h">
+      <h2 id="calc-h">Order total</h2>
+      <div class="field">
+        <label for="qty">Quantity</label>
+        <input id="qty" name="qty" type="number" min="1" value="2">
+      </div>
+      <p>Total: <output name="total" for="qty">€98.00</output></p>
+    </section>
+
+    <!-- polite status: exists empty on load, text is set later -->
+    <p role="status" class="toast"></p>
+
+    <!-- urgent error only -->
+    <div role="alert">
+      <p><strong>Upload failed:</strong> the file is larger than 25 MB. <a href="/help/limits">See limits</a>.</p>
+    </div>
+  </main>
+</body>
+</html>

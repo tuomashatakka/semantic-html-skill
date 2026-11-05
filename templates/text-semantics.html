@@ -1,0 +1,43 @@
+<!doctype html>
+<!--
+  text-semantics — inline elements carry meaning that survives into AT, search and reader modes. Each line shows the element for one meaning.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Text semantics – Templates</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <main id="main">
+    <h1>Text-level semantics</h1>
+    <article class="prose flow">
+      <p><strong>Important:</strong> back up first. You <em>must</em> restart afterwards.</p>
+      <p>Search results highlight the <mark>matched term</mark>.</p>
+      <p>Published <time datetime="2026-11-05T14:00+02:00">5 Nov 2026, 14:00</time>; event lasts <time datetime="PT2H30M">2½ hours</time>.</p>
+      <p>Price: <data value="49.90">€49.90</data>. Stock: <data value="12">twelve</data> units.</p>
+      <p>The <abbr title="World Wide Web Consortium">W3C</abbr> and the <abbr title="Web Hypertext Application Technology Working Group">WHATWG</abbr> publish web standards.</p>
+      <p><dfn id="def-a11y">Accessibility</dfn> is the practice of making content usable by as many people as possible.</p>
+      <p>As the spec says, <q cite="https://html.spec.whatwg.org/">the dialog element represents a transitory part of an application</q>.</p>
+      <blockquote cite="https://www.w3.org/WAI/fundamentals/accessibility-intro/">
+        <p>Accessibility is essential for developers and organizations that want to create high-quality websites.</p>
+      </blockquote>
+      <p>Source: <cite><a href="https://www.w3.org/WAI/fundamentals/accessibility-intro/">Introduction to Web Accessibility</a></cite></p>
+      <p>Run <code>npm run check</code>, press <kbd><kbd>Ctrl</kbd>+<kbd>C</kbd></kbd> to stop; output: <samp>All checks passed</samp>.</p>
+      <p>The area is <var>w</var> × <var>h</var>; water is H<sub>2</sub>O; E = mc<sup>2</sup>.</p>
+      <p>Price was <del datetime="2026-11-01">€59</del> <ins datetime="2026-11-01">€49</ins>.</p>
+      <p><s>Free shipping on all orders</s> — offer ended.</p>
+      <p><small>Prices include VAT.</small></p>
+      <p>The ship <i lang="fi">Merikarhu</i> sailed at dawn; <b>keywords</b> stand out without implying importance.</p>
+      <p lang="ja"><ruby>漢<rp>(</rp><rt>kan</rt><rp>)</rp>字<rp>(</rp><rt>ji</rt><rp>)</rp></ruby></p>
+      <p>Line breaks belong in addresses and poems only:</p>
+      <address>Acme Oy<br>Mannerheimintie 1<br>00100 Helsinki</address>
+      <p>Long words can break here: super<wbr>cali<wbr>fragilistic.</p>
+      <p dir="auto">User-generated name: <bdi>إيان</bdi> scored 90 points.</p>
+      <hr>
+      <pre><code class="language-css">@layer base { a { color: var(--color-link); } }</code></pre>
+    </article>
+  </main>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<!--
+  media — figure/figcaption, responsive images (picture + srcset/sizes, width/height to prevent CLS), decorative vs informative alt, video with captions track, audio, titled iframe, inline SVG icon.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Media – Templates</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <main id="main">
+    <h1>Media patterns</h1>
+
+    <figure>
+      <picture>
+        <source type="image/avif" srcset="/img/fjord-800.avif 800w, /img/fjord-1600.avif 1600w" sizes="(width >= 60rem) 60rem, 100vw">
+        <img src="/img/fjord-800.jpg" srcset="/img/fjord-800.jpg 800w, /img/fjord-1600.jpg 1600w"
+             sizes="(width >= 60rem) 60rem, 100vw" width="1600" height="900"
+             alt="A narrow fjord at dawn, mist over dark water between steep cliffs."
+             loading="lazy" decoding="async">
+      </picture>
+      <figcaption>Geirangerfjord, Norway. Photo: K. Nilsen.</figcaption>
+    </figure>
+
+    <!-- decorative: empty alt, no title -->
+    <img src="/img/divider.svg" alt="" width="600" height="20">
+
+    <figure>
+      <video controls width="1280" height="720" poster="/video/intro.jpg" preload="metadata">
+        <source src="/video/intro.webm" type="video/webm">
+        <source src="/video/intro.mp4" type="video/mp4">
+        <track kind="captions" src="/video/intro.en.vtt" srclang="en" label="English" default>
+        <p>Your browser can't play this video. <a href="/video/intro.mp4">Download it</a>.</p>
+      </video>
+      <figcaption>Product intro (2:14). <a href="/video/intro-transcript">Read the transcript</a>.</figcaption>
+    </figure>
+
+    <figure>
+      <audio controls src="/audio/episode-12.mp3"></audio>
+      <figcaption>Episode 12 — Semantic HTML in 2026. <a href="/audio/episode-12-transcript">Transcript</a>.</figcaption>
+    </figure>
+
+    <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=24.9,60.1,25.0,60.2" title="Map of central Helsinki"
+            width="600" height="400" loading="lazy"></iframe>
+
+    <p>
+      <button type="button">
+        <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 16 16"><path d="M2 8h12M8 2v12"/></svg>
+        Add item
+      </button>
+    </p>
+
+    <!-- meaningful standalone SVG -->
+    <svg role="img" aria-labelledby="chart-t" width="200" height="100" viewBox="0 0 200 100">
+      <title id="chart-t">Sales rose 40% from January to March</title>
+      <polyline points="0,90 100,60 200,20" fill="none" stroke="currentColor"/>
+    </svg>
+  </main>
+</body>
+</html>

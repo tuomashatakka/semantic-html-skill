@@ -1,0 +1,73 @@
+<!doctype html>
+<!--
+  data-table — caption, colgroup, thead/tbody/tfoot, th scope (col/row), numeric alignment, sortable headers (aria-sort on th, button inside), focusable scroll wrapper, a complex table with headers=.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Data table – Templates</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <main id="main">
+    <h1>Quarterly revenue</h1>
+
+    <section class="table-scroll" aria-labelledby="rev-cap" tabindex="0">
+      <table class="data">
+        <caption id="rev-cap">Revenue by region, 2026 (thousands of EUR)</caption>
+        <colgroup>
+          <col>
+          <col span="4">
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col" aria-sort="ascending"><button type="button">Region</button></th>
+            <th scope="col" class="num"><button type="button">Q1</button></th>
+            <th scope="col" class="num"><button type="button">Q2</button></th>
+            <th scope="col" class="num"><button type="button">Q3</button></th>
+            <th scope="col" class="num"><button type="button">Q4</button></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Nordics</th><td class="num">1 204</td><td class="num">1 330</td><td class="num">1 410</td><td class="num">1 602</td></tr>
+          <tr><th scope="row">DACH</th><td class="num">980</td><td class="num">1 015</td><td class="num">1 120</td><td class="num">1 240</td></tr>
+          <tr><th scope="row">Benelux</th><td class="num">640</td><td class="num">702</td><td class="num">688</td><td class="num">755</td></tr>
+        </tbody>
+        <tfoot>
+          <tr><th scope="row">Total</th><td class="num">2 824</td><td class="num">3 047</td><td class="num">3 218</td><td class="num">3 597</td></tr>
+        </tfoot>
+      </table>
+    </section>
+
+    <h2>Complex headers</h2>
+    <table class="data">
+      <caption>Opening hours by location</caption>
+      <thead>
+        <tr>
+          <td></td>
+          <th id="wkd" scope="colgroup" colspan="2">Weekdays</th>
+          <th id="wke" scope="colgroup" colspan="2">Weekend</th>
+        </tr>
+        <tr>
+          <td></td>
+          <th id="wkd-open" headers="wkd" scope="col">Open</th>
+          <th id="wkd-close" headers="wkd" scope="col">Close</th>
+          <th id="wke-open" headers="wke" scope="col">Open</th>
+          <th id="wke-close" headers="wke" scope="col">Close</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th id="hki" scope="row">Helsinki</th>
+          <td headers="hki wkd wkd-open"><time datetime="08:00">08:00</time></td>
+          <td headers="hki wkd wkd-close"><time datetime="20:00">20:00</time></td>
+          <td headers="hki wke wke-open"><time datetime="10:00">10:00</time></td>
+          <td headers="hki wke wke-close"><time datetime="16:00">16:00</time></td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- Sorting: JS reorders rows and moves aria-sort; CSS draws the arrow from [aria-sort]. -->
+  </main>
+</body>
+</html>

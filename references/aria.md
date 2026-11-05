@@ -1,62 +1,117 @@
-# ARIA & Accessibility — use native first
+# ARIA — native first, then ARIA done right
 
-Digested from MDN `web/accessibility/aria/`. ARIA *supplements* HTML for
-widgets/interactions that have no native element. It never changes behavior —
-only the accessibility tree — so anything you assert with ARIA you must also
-implement (keyboard, focus, state sync) yourself.
+The lookup tables (element → implicit role, every role, every state and
+property) live in `aria-index.md`, which is generated from MDN. This file
+covers how to decide.
 
-## The rules, in order of how often they save you
+## The five rules of ARIA (W3C *Using ARIA*), in order of how often they save you
 
-1. **First rule of ARIA: don't use ARIA.** If a native HTML element or
-   attribute already has the semantics and behavior you need, use it instead of
-   bolting a `role`/state onto a generic element. Native elements come with
-   keyboard support, roles, and states for free.
-2. **No ARIA is better than bad ARIA.** WebAIM's survey of a million home pages
-   found pages *with* ARIA averaged ~41% more detected errors. Wrong ARIA
-   actively misleads assistive tech — worse than none.
-3. **Don't duplicate implicit roles.** Landmark elements (`<main>`, `<nav>`,
-   `<header>`, `<footer>`, `<aside>`) already expose their role; adding
-   `role="navigation"` to a `<nav>` is redundant noise.
-4. **Don't change native semantics.** `<h2 role="tab">` breaks the heading.
-   Wrap instead: `<h2><span role="tab">…</span></h2>` only if truly needed.
-5. **All interactive ARIA controls must be keyboard usable**, and never put
-   `role`/`aria-*`/`tabindex` on a hidden element.
+1. **Don't use ARIA if a native element or attribute exists.** Use `<button>`
+   rather than `role="button"`, `<nav>` rather than `role="navigation"`,
+   `<input type="checkbox">` rather than `role="checkbox"`, `hidden`/`inert`
+   rather than `aria-hidden` games.
+2. **Don't change native semantics** unless you really must. For example,
+   don't put `role="heading"` on a `<button>`. Nest the elements instead:
+   `<h2><button>…</button></h2>`.
+3. **Every interactive ARIA control must be keyboard-operable.** A
+   `role="tab"` needs arrow keys, Home/End and roving `tabindex`.
+4. **Never put `role="presentation"`/`none` or `aria-hidden="true"` on a
+   focusable element.**
+5. **Every interactive element needs an accessible name.**
 
-## In MDN's words
+No ARIA is better than bad ARIA. A wrong role, or a state that isn't kept in
+sync, actively misleads assistive-technology users. Pages with ARIA tend to
+have more accessibility errors, not fewer.
 
-> Many of these widgets are fully supported in modern browsers. **Developers should prefer using the correct semantic HTML element over using ARIA**, if such an element exists. For instance, native elements have built-in keyboard accessibility, roles and states. However, if you choose to use ARIA, you are responsible for mimicking the equivalent browser behavior in script.
+## How to decide
 
-> The first rule of ARIA use is "If you can use a native HTML element or attribute with the semantics and behavior you require already built in, instead of re-purposing an element and adding an ARIA role, state or property to make it accessible, then do so."
+```text
+Is there a native element with this meaning + behaviour?
+├─ yes → use it (style it; don't rebuild it)
+└─ no  → is there a native *attribute* (hidden, inert, disabled, required,
+         popover, command/commandfor, open, aria-current-equivalent)?
+         ├─ yes → use it
+         └─ no  → ARIA pattern from the APG (https://www.w3.org/WAI/ARIA/apg/patterns/)
+                   ├─ role on the right element
+                   ├─ required owned elements (tablist › tab, listbox › option…)
+                   ├─ name (aria-label / aria-labelledby)
+                   ├─ states kept in sync in script (aria-selected, aria-expanded…)
+                   └─ full keyboard model
+```
 
-> There is a saying "No ARIA is better than bad ARIA." In WebAim's survey of over one million home pages, they found that Home pages with ARIA present averaged 41% more detected errors than those without ARIA. While ARIA is designed to make web pages more accessible, if used incorrectly, it can do more harm than good.
+## Accessible names, in priority order
 
-## Landmark element → implicit role (don't re-declare these)
+1. `aria-labelledby="id1 id2"` points at visible text. It wins over
+   everything else.
+2. `aria-label="…"` is for when there is no visible text (icon buttons). It
+   isn't translated by some tools, so prefer visible text.
+3. Native labelling: `<label>`, `<caption>`, `<legend>`, `<figcaption>`,
+   `alt`, `<title>` in SVG.
+4. Contents, for roles that allow naming from content (buttons, links,
+   headings).
+5. `title` is a last resort, because it's unreliable.
 
-| Native element | Implicit ARIA role |
-| -------------- | ------------------ |
-| `<header>` (page-level) | `banner` |
-| `<nav>` | `navigation` |
-| `<main>` | `main` |
-| `<aside>` | `complementary` |
-| `<footer>` (page-level) | `contentinfo` |
-| `<section>` with name | `region` |
-| `<form>` with name | `form` |
-| `<search>` | `search` |
-| `<button>` | `button` |
-| `<a href>` | `link` |
-| `<ul>` / `<ol>` | `list` |
-| `<li>` | `listitem` |
+Descriptions add to a name: use `aria-describedby` for hints and errors, and
+`aria-details` for rich structured detail.
 
-Prefer the native element on the left. Reach for the role on the right only
-when you genuinely cannot use the native element (e.g. a design system that
-forces a `<div>`), and then own the full behavior in script.
+**Naming is prohibited** on `generic` (`<div>`, `<span>`), `presentation`,
+`paragraph`, `code`, `strong`/`em` and a few others. Putting `aria-label` on
+a bare `<div>` does nothing reliable.
 
-## ARIA roles available in MDN (87)
+## Landmarks
 
-`alert`, `alertdialog`, `application`, `article`, `banner`, `button`, `cell`, `checkbox`, `columnheader`, `combobox`, `command`, `comment`, `complementary`, `composite`, `contentinfo`, `definition`, `dialog`, `directory`, `document`, `feed`, `figure`, `form`, `generic`, `grid`, `gridcell`, `group`, `heading`, `img`, `input`, `landmark`, `link`, `list`, `listbox`, `listitem`, `log`, `main`, `mark`, `marquee`, `math`, `menu`, `menubar`, `menuitem`, `menuitemcheckbox`, `menuitemradio`, `meter`, `navigation`, `none`, `note`, `option`, `presentation`, `progressbar`, `radio`, `radiogroup`, `range`, `region`, `roletype`, `row`, `rowgroup`, `rowheader`, `scrollbar`, `search`, `searchbox`, `section`, `sectionhead`, `select`, `separator`, `slider`, `spinbutton`, `status`, `structurals`, `structure`, `suggestion`, `switch`, `tab`, `table`, `tablist`, `tabpanel`, `term`, `textbox`, `timer`, `toolbar`, `tooltip`, `tree`, `treegrid`, `treeitem`, `widget`, `window`
+| Element | Role | Condition |
+| --- | --- | --- |
+| `<header>` | `banner` | only when not inside `<article>`/`<aside>`/`<main>`/`<nav>`/`<section>` |
+| `<footer>` | `contentinfo` | same scoping as `<header>` |
+| `<nav>` | `navigation` | label it when there is more than one: `aria-label="Primary"` |
+| `<main>` | `main` | exactly one per page |
+| `<aside>` | `complementary` | |
+| `<section>` | `region` | only when it has an accessible name (`aria-labelledby` pointing at its heading) |
+| `<form>` | `form` | only when named |
+| `<search>` | `search` | wrap the search form in it |
 
-## ARIA states & properties available in MDN (53)
+When the same landmark type appears more than once, give each a unique
+label. Don't add the word "navigation" to a nav's label: screen readers
+already announce the role.
 
-`aria-activedescendant`, `aria-atomic`, `aria-autocomplete`, `aria-braillelabel`, `aria-brailleroledescription`, `aria-busy`, `aria-checked`, `aria-colcount`, `aria-colindex`, `aria-colindextext`, `aria-colspan`, `aria-controls`, `aria-current`, `aria-describedby`, `aria-description`, `aria-details`, `aria-disabled`, `aria-dropeffect`, `aria-errormessage`, `aria-expanded`, `aria-flowto`, `aria-grabbed`, `aria-haspopup`, `aria-hidden`, `aria-invalid`, `aria-keyshortcuts`, `aria-label`, `aria-labelledby`, `aria-level`, `aria-live`, `aria-modal`, `aria-multiline`, `aria-multiselectable`, `aria-orientation`, `aria-owns`, `aria-placeholder`, `aria-posinset`, `aria-pressed`, `aria-readonly`, `aria-relevant`, `aria-required`, `aria-roledescription`, `aria-rowcount`, `aria-rowindex`, `aria-rowindextext`, `aria-rowspan`, `aria-selected`, `aria-setsize`, `aria-sort`, `aria-valuemax`, `aria-valuemin`, `aria-valuenow`, `aria-valuetext`
+## Live regions
 
-For the full role/state contract (required children, supported states, name-from), query the index: `search_mdn("<role> role aria")`.
+- `role="status"` (polite) is for "Saved", result counts and progress text.
+  `<output>` is an implicit status region for computed results.
+- `role="alert"` (assertive) is for urgent errors only. Use it sparingly.
+- `aria-live="polite"` plus `aria-atomic="true"` suits custom regions.
+- The region must **exist in the DOM before** its content changes. Change its
+  text; don't insert the region together with the text.
+
+## Patterns that still need ARIA (no native equivalent yet)
+
+| Pattern | Roles | Notes |
+| --- | --- | --- |
+| Tabs | `tablist` › `tab` (+ `aria-selected`, `aria-controls`) and `tabpanel` | arrow keys, roving `tabindex`; see `templates/tabs.html` |
+| Combobox / autocomplete | `combobox` + `listbox` › `option` | Try `<input list>` + `<datalist>` first |
+| Tree view | `tree` › `treeitem` (+ `group`) | |
+| Data grid (interactive) | `grid` › `row` › `gridcell` | A static table is just `<table>` |
+| Toolbar | `toolbar` | arrow-key roving between controls |
+| Feed | `feed` › `article` | infinite scroll |
+| Switch | `<input type="checkbox" role="switch">` | keep the native checkbox and add the role |
+| Breadcrumb current page | `aria-current="page"` | on the link to the current page, also in nav menus |
+| Disabled but focusable | `aria-disabled="true"` | when users must still be able to discover the control |
+
+## Common mistakes
+
+- `aria-expanded` on the content panel instead of the control. It belongs on
+  the button.
+- `aria-controls` used as if it did something. Most AT ignores it, so it's
+  harmless but not a fix.
+- `aria-hidden="true"` on a parent of focusable elements. Use `inert`.
+- `role="dialog"` on a div instead of `<dialog>`. You lose focus trapping,
+  Esc handling and the top layer.
+- `role="list"` added to every `<ul>`. Only add it when `list-style: none`
+  removes list semantics in Safari *and* the count matters to users.
+- `role="img"` on an `<svg>` with no name. Add `aria-label` or a `<title>`,
+  or `aria-hidden="true"` if it's decorative.
+
+Deep lookups: `get_element <name>` gives an element's implicit and permitted
+roles; `search_mdn "<role> role required owned elements"` covers role
+contracts.

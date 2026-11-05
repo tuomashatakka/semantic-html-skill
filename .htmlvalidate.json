@@ -1,0 +1,29 @@
+{
+  "extends": [
+    "html-validate:recommended",
+    "html-validate:a11y"
+  ],
+  "rules": {
+    "no-inline-style": "error",
+    "require-sri": "off",
+    "no-trailing-whitespace": "off",
+    "doctype-style": [
+      "error",
+      {
+        "style": "lowercase"
+      }
+    ],
+    "form-dup-name": [
+      "error",
+      {
+        "shared": [
+          "radio",
+          "checkbox",
+          "button",
+          "reset",
+          "submit"
+        ]
+      }
+    ]
+  }
+}

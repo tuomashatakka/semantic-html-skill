@@ -1,0 +1,28 @@
+{
+  "name": "semantic-html-skill",
+  "version": "2.0.0",
+  "description": "Claude / opencode skill: semantic, accessible HTML + modern CSS, with a self-contained TypeScript MDN lookup (CLI + MCP server).",
+  "type": "module",
+  "private": true,
+  "engines": { "node": ">=22.18" },
+  "bin": { "mdn": "./src/cli.ts" },
+  "scripts": {
+    "mdn": "node src/cli.ts",
+    "mcp": "node src/mcp/server.ts",
+    "viewer": "node src/viewer/server.ts",
+    "build:refs": "node src/build-references.ts",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "node --test 'test/**/*.test.ts'",
+    "check:templates": "html-validate 'templates/**/*.html'",
+    "check": "npm run typecheck && npm test && npm run check:templates"
+  },
+  "optionalDependencies": {
+    "@huggingface/transformers": "^4.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.2.0",
+    "html-validate": "^11.18.0",
+    "typescript": "^7.0.2"
+  }
+}

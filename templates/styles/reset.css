@@ -1,0 +1,7 @@
+/* reset.css — minimal modern reset. Import: @import url("reset.css") layer(reset); */
+*, ::before, ::after { box-sizing: border-box; }
+:where(body, h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd, ul, ol) { margin: 0; }
+:where(img, picture, video, canvas, svg) { display: block; max-inline-size: 100%; block-size: auto; }
+:where(input, button, textarea, select) { font: inherit; color: inherit; }
+:where(p, h1, h2, h3, h4, h5, h6) { overflow-wrap: break-word; }
+:where([hidden]:not([hidden="until-found"])) { display: none !important; }

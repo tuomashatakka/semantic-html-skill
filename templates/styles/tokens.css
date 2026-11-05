@@ -1,0 +1,135 @@
+/* tokens.css — design tokens as custom properties.
+ * Naming: --category-role-scale. Primitive scales feed semantic tokens;
+ * components consume semantic tokens only. Theme = color-scheme + light-dark().
+ * Import into the `tokens` layer:  @import url("tokens.css") layer(tokens);
+ */
+:root {
+  color-scheme: light dark;
+
+  /* ── color: primitives (oklch, perceptually even steps) ─────────────── */
+  --color-white: oklch(100% 0 0);
+  --color-black: oklch(0% 0 0);
+  --color-transparent: transparent;
+
+  --color-neutral-50: oklch(98.5% 0.003 265);
+  --color-neutral-100: oklch(96.5% 0.005 265);
+  --color-neutral-200: oklch(92% 0.008 265);
+  --color-neutral-300: oklch(87% 0.012 265);
+  --color-neutral-400: oklch(71% 0.015 265);
+  --color-neutral-500: oklch(55% 0.018 265);
+  --color-neutral-600: oklch(45% 0.018 265);
+  --color-neutral-700: oklch(37% 0.017 265);
+  --color-neutral-800: oklch(28% 0.015 265);
+  --color-neutral-900: oklch(21% 0.012 265);
+  --color-neutral-950: oklch(14.5% 0.01 265);
+
+  --color-primary-50: oklch(97% 0.02 262);
+  --color-primary-100: oklch(93% 0.045 262);
+  --color-primary-300: oklch(81% 0.1 262);
+  --color-primary-500: oklch(62% 0.19 262);
+  --color-primary-600: oklch(54% 0.21 262);
+  --color-primary-700: oklch(47% 0.2 262);
+  --color-primary-900: oklch(33% 0.13 262);
+
+  --color-success-50: oklch(97% 0.03 150);
+  --color-success-500: oklch(63% 0.16 150);
+  --color-success-700: oklch(45% 0.12 150);
+  --color-warning-50: oklch(98% 0.04 85);
+  --color-warning-500: oklch(78% 0.16 75);
+  --color-warning-700: oklch(52% 0.12 60);
+  --color-error-50: oklch(97% 0.02 25);
+  --color-error-500: oklch(62% 0.21 25);
+  --color-error-700: oklch(48% 0.18 25);
+  --color-info-50: oklch(97% 0.02 230);
+  --color-info-500: oklch(65% 0.14 230);
+  --color-info-700: oklch(47% 0.11 230);
+
+  /* ── color: semantic (what components use) ───────────────────────────── */
+  --color-surface: light-dark(var(--color-white), var(--color-neutral-950));
+  --color-surface-raised: light-dark(var(--color-neutral-50), var(--color-neutral-900));
+  --color-surface-sunken: light-dark(var(--color-neutral-100), var(--color-black));
+  --color-text: light-dark(var(--color-neutral-900), var(--color-neutral-50));
+  --color-text-muted: light-dark(var(--color-neutral-600), var(--color-neutral-400));
+  --color-border: light-dark(var(--color-neutral-300), var(--color-neutral-700));
+  --color-link: light-dark(var(--color-primary-700), var(--color-primary-300));
+  --color-action: light-dark(var(--color-primary-600), var(--color-primary-500));
+  --color-action-hover: light-dark(var(--color-primary-700), var(--color-primary-300));
+  --color-on-action: var(--color-white);
+  --color-focus: light-dark(var(--color-primary-600), var(--color-primary-300));
+  --color-danger: light-dark(var(--color-error-700), var(--color-error-500));
+  --color-success: light-dark(var(--color-success-700), var(--color-success-500));
+  --color-backdrop: oklch(0% 0 0 / 0.55);
+
+  /* ── typography ───────────────────────────────────────────────────────── */
+  --font-family-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-family-serif: ui-serif, Georgia, "Times New Roman", serif;
+  --font-family-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* fluid scale: always rem + vw so zoom still works */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --font-size-lg: clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem);
+  --font-size-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.75rem);
+  --font-size-2xl: clamp(1.5rem, 1.25rem + 1.2vw, 2.25rem);
+  --font-size-3xl: clamp(1.875rem, 1.45rem + 2vw, 3rem);
+  --font-size-4xl: clamp(2.25rem, 1.6rem + 3vw, 3.75rem);
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-none: 1;
+  --line-height-tight: 1.2;
+  --line-height-snug: 1.35;
+  --line-height-normal: 1.55;
+  --line-height-relaxed: 1.7;
+
+  /* ── space ────────────────────────────────────────────────────────────── */
+  --spacing-3xs: 0.125rem;
+  --spacing-2xs: 0.25rem;
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: clamp(3rem, 2rem + 4vw, 6rem);
+  --measure: 68ch;
+
+  /* ── borders, radii, shadows ──────────────────────────────────────────── */
+  --border-width-1: 1px;
+  --border-width-2: 2px;
+  --border-width-4: 4px;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1.25rem;
+  --radius-full: 999px;
+  --shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.08);
+  --shadow-md: 0 4px 12px oklch(0% 0 0 / 0.1);
+  --shadow-lg: 0 12px 32px oklch(0% 0 0 / 0.14);
+  --shadow-xl: 0 24px 64px oklch(0% 0 0 / 0.18);
+
+  /* ── focus ────────────────────────────────────────────────────────────── */
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+
+  /* ── motion ───────────────────────────────────────────────────────────── */
+  --duration-instant: 80ms;
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: linear(0, 0.38 9%, 0.86 20%, 1.06 31%, 1.09 38%, 1.03 52%, 0.99 66%, 1);
+
+  /* breakpoints can't be used inside @media; documented for reference:
+     phone ≥ 30rem (480px) · tablet ≥ 48rem · desktop ≥ 80rem (1280px) */
+}
+
+/* user override: <html data-theme="dark|light"> */
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }

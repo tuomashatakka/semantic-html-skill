@@ -1,0 +1,86 @@
+<!doctype html>
+<!--
+  article — a self-contained composition (blog post, news story, doc page).
+  header: title + byline (<address> for author contact, <time datetime>);
+  sections with headings; figure + figcaption; aside for tangents; footnotes as a list.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Why native dialogs win – Acme Blog</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="reading-progress" aria-hidden="true"></div>
+  <header><a href="/">Acme Blog</a></header>
+
+  <main id="main">
+    <article class="prose flow">
+      <header>
+        <h1>Why native dialogs win</h1>
+        <p>Focus trapping, Esc, top layer, and backdrop — for zero lines of JavaScript.</p>
+        <p>
+          By <a href="/authors/sam" rel="author">Sam Rivera</a> ·
+          <time datetime="2026-11-05">5 November 2026</time> ·
+          <span>6 min read</span>
+        </p>
+      </header>
+
+      <nav class="toc" aria-labelledby="toc-h">
+        <h2 id="toc-h">On this page</h2>
+        <ol>
+          <li><a href="#problem">The problem</a></li>
+          <li><a href="#solution">The native solution</a></li>
+        </ol>
+      </nav>
+
+      <section aria-labelledby="problem">
+        <h2 id="problem">The problem</h2>
+        <p>Hand-rolled modals forget <em>something</em>: returning focus, inerting the page, or the <kbd>Esc</kbd> key.<sup><a href="#fn1" id="fn1-ref" aria-describedby="footnotes-h">1</a></sup></p>
+        <blockquote cite="https://html.spec.whatwg.org/multipage/interactive-elements.html#the-dialog-element">
+          <p>The dialog element represents a transitory part of an application, in the form of a small window.</p>
+        </blockquote>
+        <p>— <cite>HTML Living Standard</cite></p>
+      </section>
+
+      <section aria-labelledby="solution">
+        <h2 id="solution">The native solution</h2>
+        <figure>
+          <pre><code>&lt;button command="show-modal" commandfor="dlg"&gt;Open&lt;/button&gt;
+&lt;dialog id="dlg" closedby="any"&gt;…&lt;/dialog&gt;</code></pre>
+          <figcaption>A modal dialog with no script.</figcaption>
+        </figure>
+        <aside aria-label="Browser support">
+          <p><strong>Support:</strong> invoker commands are Baseline newly available (Dec 2025).</p>
+        </aside>
+      </section>
+
+      <footer>
+        <section aria-labelledby="footnotes-h">
+          <h2 id="footnotes-h">Footnotes</h2>
+          <ol>
+            <li id="fn1">The APG modal pattern lists eight requirements. <a href="#fn1-ref" aria-label="Back to reference 1">↩</a></li>
+          </ol>
+        </section>
+        <p>Tags: <a href="/tags/html" rel="tag">HTML</a>, <a href="/tags/a11y" rel="tag">Accessibility</a></p>
+        <address>Questions? Write to <a href="mailto:sam@example.com">sam@example.com</a>.</address>
+      </footer>
+    </article>
+
+    <section aria-labelledby="comments-h">
+      <h2 id="comments-h">Comments</h2>
+      <article>
+        <header>
+          <h3>Alex</h3>
+          <p><time datetime="2026-11-05T12:30">2 hours ago</time></p>
+        </header>
+        <p>Finally, no more focus-trap libraries.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer><p><small>© 2026 Acme</small></p></footer>
+</body>
+</html>

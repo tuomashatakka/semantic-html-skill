@@ -1,0 +1,51 @@
+<!doctype html>
+<!--
+  forms-search — <search> landmark, type=search, results count in a status region, results as an ordered list.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Search – Templates</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <main id="main">
+    <h1>Search the docs</h1>
+    <search>
+      <form action="/search" method="get">
+        <div class="field">
+          <label for="q">Search terms</label>
+          <input id="q" name="q" type="search" value="dialog" enterkeyhint="search">
+        </div>
+        <button type="submit">Search</button>
+      </form>
+    </search>
+
+    <section aria-labelledby="results-h">
+      <h2 id="results-h">Results</h2>
+      <p role="status">3 results for “dialog”</p>
+      <ol>
+        <li>
+          <article>
+            <h3><a href="/docs/dialog"><mark>Dialog</mark> element</a></h3>
+            <p>Use <code>&lt;dialog&gt;</code> for modal and non-modal windows.</p>
+          </article>
+        </li>
+        <li>
+          <article>
+            <h3><a href="/docs/popover">Popover API</a></h3>
+            <p>Light-dismiss overlays without a <mark>dialog</mark>.</p>
+          </article>
+        </li>
+        <li>
+          <article>
+            <h3><a href="/docs/commands">Invoker commands</a></h3>
+            <p>Open a <mark>dialog</mark> declaratively with <code>command</code>.</p>
+          </article>
+        </li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>
