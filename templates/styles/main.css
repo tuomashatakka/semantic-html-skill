@@ -1,0 +1,11 @@
+/* main.css — entry stylesheet. One <link rel="stylesheet" href="styles/main.css">.
+ * The layer order is declared once; later layers win regardless of specificity.
+ */
+@layer reset, tokens, base, layout, components, utilities, overrides;
+
+@import url("reset.css") layer(reset);
+@import url("tokens.css") layer(tokens);
+@import url("base.css") layer(base);
+@import url("layout.css") layer(layout);
+@import url("components.css") layer(components);
+@import url("utilities.css") layer(utilities);

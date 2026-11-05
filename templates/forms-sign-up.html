@@ -1,0 +1,53 @@
+<!doctype html>
+<!--
+  forms-sign-up — fieldsets, visible required marker, hints + errors via aria-describedby, new-password, terms checkbox.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Create account – Templates</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <main id="main">
+    <h1>Create an account</h1>
+    <p>Fields marked “(required)” must be filled in.</p>
+    <form action="/users" method="post">
+      <fieldset>
+        <legend>About you</legend>
+        <div class="field">
+          <label for="su-name">Full name <small>(required)</small></label>
+          <input id="su-name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="su-email">Email <small>(required)</small></label>
+          <input id="su-email" name="email" type="email" autocomplete="email" required aria-describedby="su-email-err">
+          <p id="su-email-err" class="error">Enter an email like name@example.com.</p>
+        </div>
+        <div class="field">
+          <label for="su-tel">Phone</label>
+          <input id="su-tel" name="tel" type="tel" autocomplete="tel">
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Security</legend>
+        <div class="field">
+          <label for="su-pw">Password <small>(required)</small></label>
+          <input id="su-pw" name="password" type="password" autocomplete="new-password" minlength="12" required aria-describedby="su-pw-hint su-pw-err">
+          <small id="su-pw-hint">At least 12 characters. A passphrase works well.</small>
+          <p id="su-pw-err" class="error">Use at least 12 characters.</p>
+        </div>
+      </fieldset>
+
+      <div class="choices">
+        <label><input type="checkbox" name="terms" required> I accept the <a href="/terms">terms of service</a> (required)</label>
+        <label><input type="checkbox" name="news"> Email me product updates</label>
+      </div>
+
+      <footer><button type="submit" class="primary">Create account</button></footer>
+    </form>
+  </main>
+</body>
+</html>

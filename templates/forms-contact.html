@@ -1,0 +1,71 @@
+<!doctype html>
+<!--
+  forms-contact — address autocomplete tokens, select with optgroup, auto-growing textarea (field-sizing), output for a live character count.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact – Templates</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <main id="main">
+    <h1>Contact us</h1>
+    <form action="/contact" method="post">
+      <div class="field">
+        <label for="c-name">Name</label>
+        <input id="c-name" name="name" type="text" autocomplete="name" required>
+      </div>
+      <div class="field">
+        <label for="c-email">Email</label>
+        <input id="c-email" name="email" type="email" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label for="c-topic">Topic</label>
+        <select id="c-topic" name="topic" required>
+          <option value="">Choose a topic…</option>
+          <optgroup label="Sales">
+            <option>Pricing</option>
+            <option>Enterprise plan</option>
+          </optgroup>
+          <optgroup label="Support">
+            <option>Bug report</option>
+            <option>Account access</option>
+          </optgroup>
+        </select>
+      </div>
+      <fieldset>
+        <legend>Postal address (optional)</legend>
+        <div class="field">
+          <label for="c-street">Street address</label>
+          <input id="c-street" name="street" type="text" autocomplete="address-line1">
+        </div>
+        <div class="field">
+          <label for="c-city">City</label>
+          <input id="c-city" name="city" type="text" autocomplete="address-level2">
+        </div>
+        <div class="field">
+          <label for="c-zip">Postal code</label>
+          <input id="c-zip" name="zip" type="text" autocomplete="postal-code" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label for="c-country">Country</label>
+          <input id="c-country" name="country" type="text" autocomplete="country-name" list="countries">
+          <datalist id="countries">
+            <option value="Finland"></option>
+            <option value="Sweden"></option>
+            <option value="Norway"></option>
+          </datalist>
+        </div>
+      </fieldset>
+      <div class="field">
+        <label for="c-msg">Message</label>
+        <textarea id="c-msg" name="message" maxlength="2000" required aria-describedby="c-msg-hint"></textarea>
+        <small id="c-msg-hint">Up to 2000 characters.</small>
+      </div>
+      <footer><button type="submit" class="primary">Send message</button></footer>
+    </form>
+  </main>
+</body>
+</html>

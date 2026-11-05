@@ -1,24 +1,7 @@
-# --- Python env ---
-.venv/
-venv/
-__pycache__/
-*.py[cod]
-*.egg-info/
-.pytest_cache/
-
-# --- Regenerable data (rebuilt by scripts/setup.sh + ingest_mdn.py) ---
-mdn_content/          # ~200MB shallow clone of github.com/mdn/content
-mdn_index.zvec/       # local vector index (rebuild: ingest_mdn.py --reindex)
-ingest.log
-ingest_status.json
-
-# Models are cached under ~/.cache/huggingface, not here — nothing to ignore.
-
-# --- Editor / OS cruft ---
+node_modules/
+# runtime cache lives in ~/.cache/semantic-html (override: SEMANTIC_HTML_CACHE)
+.cache/
 .DS_Store
 .idea/
 .vscode/
-
-# --- Backups from in-place edits ---
-*.bak
-SKILL.md.bak-*
+*.log

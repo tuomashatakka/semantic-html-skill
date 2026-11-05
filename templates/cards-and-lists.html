@@ -1,0 +1,60 @@
+<!doctype html>
+<!--
+  cards-and-lists — a collection is a list: ul.cards > li > article.card; heading link stretched over the card (one tab stop, one link name); container-query layout; key/value data as <dl>; ordered steps as <ol>.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cards and lists – Templates</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <main id="main">
+    <h1>Products</h1>
+
+    <section aria-labelledby="featured-h">
+      <h2 id="featured-h">Featured</h2>
+      <ul class="cards grid">
+        <li>
+          <article class="card">
+            <img src="/img/lamp.jpg" alt="" width="640" height="360" loading="lazy">
+            <h3><a href="/products/aalto-lamp">Aalto desk lamp</a></h3>
+            <p>Bent birch, warm dimmable LED.</p>
+            <footer>
+              <data value="129">€129</data> ·
+              <span><meter min="0" max="5" value="4.6">4.6 out of 5</meter> 4.6/5</span>
+            </footer>
+          </article>
+        </li>
+        <li>
+          <article class="card">
+            <img src="/img/chair.jpg" alt="" width="640" height="360" loading="lazy">
+            <h3><a href="/products/kivi-chair">Kivi lounge chair</a></h3>
+            <p>Solid oak frame, wool upholstery.</p>
+            <footer><data value="890">€890</data> · <del>€990</del> <ins>Save €100</ins></footer>
+          </article>
+        </li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="specs-h">
+      <h2 id="specs-h">Specifications</h2>
+      <dl>
+        <div><dt>Dimensions</dt><dd>45 × 20 × 38 cm</dd></div>
+        <div><dt>Weight</dt><dd>1.8 kg</dd></div>
+        <div><dt>Materials</dt><dd>Birch plywood</dd><dd>Aluminium</dd></div>
+      </dl>
+    </section>
+
+    <section aria-labelledby="steps-h">
+      <h2 id="steps-h">Assembly</h2>
+      <ol>
+        <li>Attach the arm to the base.</li>
+        <li>Screw in the shade.</li>
+        <li>Plug in and press <kbd>Power</kbd>.</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

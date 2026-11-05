@@ -1,0 +1,71 @@
+<!doctype html>
+<!--
+  page-layout — landmarks. One <main>; header/footer at body level map to
+  banner/contentinfo; multiple <nav>s get distinct labels; <search> wraps site search.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard – Acme</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header>
+    <a href="/" aria-label="Acme home">
+      <svg aria-hidden="true" focusable="false" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14"/></svg>
+    </a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="/" aria-current="page">Dashboard</a></li>
+        <li><a href="/projects">Projects</a></li>
+        <li><a href="/reports">Reports</a></li>
+      </ul>
+    </nav>
+    <search>
+      <form action="/search">
+        <label for="site-q" class="visually-hidden">Search the site</label>
+        <input id="site-q" name="q" type="search" autocomplete="off">
+        <button type="submit">Search</button>
+      </form>
+    </search>
+  </header>
+
+  <main id="main">
+    <h1>Dashboard</h1>
+
+    <section aria-labelledby="recent-h">
+      <h2 id="recent-h">Recent activity</h2>
+      <ol>
+        <li><time datetime="2026-11-05T09:12">09:12</time> — Report “Q3 revenue” published</li>
+        <li><time datetime="2026-11-04T16:40">Yesterday</time> — 3 comments on “Roadmap”</li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="stats-h">
+      <h2 id="stats-h">This week</h2>
+      <dl>
+        <div><dt>Visitors</dt><dd><data value="12480">12.5k</data></dd></div>
+        <div><dt>Conversion</dt><dd><data value="0.034">3.4%</data></dd></div>
+      </dl>
+    </section>
+  </main>
+
+  <aside aria-label="Help">
+    <h2>Need help?</h2>
+    <p><a href="/docs">Read the docs</a> or <a href="/support">contact support</a>.</p>
+  </aside>
+
+  <footer>
+    <nav aria-label="Footer">
+      <ul>
+        <li><a href="/privacy">Privacy</a></li>
+        <li><a href="/terms">Terms</a></li>
+      </ul>
+    </nav>
+    <p><small>© 2026 Acme Inc.</small></p>
+  </footer>
+</body>
+</html>

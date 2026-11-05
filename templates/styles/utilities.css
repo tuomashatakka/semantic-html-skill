@@ -1,0 +1,10 @@
+/* utilities.css — the few single-purpose helpers. Import: @import url("utilities.css") layer(utilities); */
+
+.visually-hidden:not(:focus-within, :active) {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

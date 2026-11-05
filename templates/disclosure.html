@@ -1,0 +1,45 @@
+<!doctype html>
+<!--
+  disclosure — <details>/<summary> (no JS), exclusive accordion with name=, animated via ::details-content in components.css, FAQ alternative as a definition list.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Disclosure – Templates</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <main id="main">
+    <h1>FAQ</h1>
+
+    <section aria-labelledby="faq-h">
+      <h2 id="faq-h">Shipping</h2>
+      <!-- same name = exclusive accordion: opening one closes the others -->
+      <details name="faq-shipping" open>
+        <summary>How long does delivery take?</summary>
+        <p>Standard delivery takes 3–5 business days within the EU.</p>
+      </details>
+      <details name="faq-shipping">
+        <summary>Do you ship outside the EU?</summary>
+        <p>Yes — to the UK, Norway and Switzerland. Duties may apply.</p>
+      </details>
+      <details name="faq-shipping">
+        <summary>Can I change my address after ordering?</summary>
+        <p>Within 2 hours of ordering, from <a href="/orders">your orders page</a>.</p>
+      </details>
+    </section>
+
+    <section aria-labelledby="terms-h">
+      <h2 id="terms-h">Glossary</h2>
+      <!-- when everything should be visible: a description list, not a widget -->
+      <dl>
+        <dt><dfn>Baseline</dfn></dt>
+        <dd>A web feature that works across all core browsers.</dd>
+        <dt><dfn>Top layer</dfn></dt>
+        <dd>A rendering layer above all other content, used by modal dialogs and popovers.</dd>
+      </dl>
+    </section>
+  </main>
+</body>
+</html>

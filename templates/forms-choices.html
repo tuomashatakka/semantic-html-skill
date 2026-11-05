@@ -1,0 +1,53 @@
+<!doctype html>
+<!--
+  forms-choices — radio and checkbox groups in fieldset/legend, a switch (native checkbox + role=switch), range with <output>, an exclusive choice via <select>.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Choices – Templates</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <main id="main">
+    <h1>Preferences</h1>
+    <form action="/preferences" method="post">
+      <fieldset>
+        <legend>Delivery speed</legend>
+        <div class="choices">
+          <label><input type="radio" name="speed" value="standard" checked> Standard (3–5 days)</label>
+          <label><input type="radio" name="speed" value="express"> Express (1–2 days)</label>
+          <label><input type="radio" name="speed" value="pickup"> Store pickup</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Notify me about</legend>
+        <div class="choices">
+          <label><input type="checkbox" name="notify" value="orders" checked> Order updates</label>
+          <label><input type="checkbox" name="notify" value="offers"> Offers</label>
+        </div>
+      </fieldset>
+
+      <div class="choices">
+        <label><input type="checkbox" role="switch" name="dark" value="on"> Dark mode</label>
+      </div>
+
+      <div class="field">
+        <label for="volume">Volume</label>
+        <input id="volume" name="volume" type="range" min="0" max="100" value="60" aria-describedby="volume-out">
+        <output id="volume-out" for="volume">60</output>
+      </div>
+
+      <footer><button type="submit" class="primary">Save preferences</button></footer>
+    </form>
+    <!-- <output> needs one line of JS to mirror the range; everything else is native. -->
+    <script type="module">
+      const range = document.getElementById("volume");
+      const out = document.getElementById("volume-out");
+      range.addEventListener("input", () => { out.value = range.value; });
+    </script>
+  </main>
+</body>
+</html>

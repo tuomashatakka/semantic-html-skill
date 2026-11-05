@@ -1,0 +1,34 @@
+/* layout.css — page regions + layout primitives. Import: @import url("layout.css") layer(layout); */
+
+/* ── layout primitives ─────────────────────────────────────────────────── */
+.flow > * + * { margin-block-start: var(--flow-space, var(--spacing-md)); }
+.cluster { display: flex; flex-wrap: wrap; gap: var(--spacing-sm); align-items: center; }
+.grid {
+  display: grid;
+  gap: var(--spacing-lg);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+}
+
+/* ── page landmarks ────────────────────────────────────────────────────── */
+body {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+body > header, body > footer {
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--color-surface-raised);
+}
+body > header { display: flex; flex-wrap: wrap; gap: var(--spacing-md); align-items: center; justify-content: space-between; }
+body > header > nav ul { display: flex; flex-wrap: wrap; gap: var(--spacing-md); }
+main { padding: var(--spacing-xl) var(--spacing-lg); inline-size: min(100%, 80rem); margin-inline: auto; }
+
+.skip-link {
+  position: absolute;
+  inset-block-start: var(--spacing-xs);
+  inset-inline-start: var(--spacing-xs);
+  z-index: 10;
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: var(--color-surface);
+  &:not(:focus-visible) { translate: 0 -200%; }
+  @media (prefers-reduced-motion: no-preference) { transition: translate var(--duration-fast) var(--ease-out); }
+}

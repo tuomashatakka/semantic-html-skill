@@ -1,0 +1,47 @@
+<!doctype html>
+<!--
+  popover — menus, toggletips and toasts without JS: popover + popovertarget/command, anchor positioning (position-area), hint popovers for hover help (limited). Light-dismiss and Esc come free.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Popover – Templates</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <main id="main">
+    <h1>Popovers</h1>
+
+    <!-- account menu: implicit anchor = invoking button -->
+    <button type="button" popovertarget="account-menu">Account</button>
+    <nav id="account-menu" class="menu" popover aria-label="Account">
+      <ul>
+        <li><a href="/profile">Profile</a></li>
+        <li><a href="/settings">Settings</a></li>
+        <li><button type="submit" form="sign-out">Sign out</button></li>
+      </ul>
+    </nav>
+    <form id="sign-out" action="/session" method="post"></form>
+
+    <!-- toggletip: click/Enter to show extra info -->
+    <p>
+      Billing cycle
+      <button type="button" class="ghost" command="toggle-popover" commandfor="cycle-tip" aria-label="About billing cycles">ⓘ</button>
+    </p>
+    <div id="cycle-tip" class="tooltip" popover>
+      <p>You're billed on the same day each month. Change it under Settings › Billing.</p>
+    </div>
+
+    <!-- hint popover: does not close an open auto popover (popover="hint" is limited availability) -->
+    <button type="button" popovertarget="kbd-hint" popovertargetaction="toggle">Shortcuts</button>
+    <div id="kbd-hint" class="tooltip" popover="hint">
+      <p>Press <kbd>/</kbd> to search, <kbd>?</kbd> for all shortcuts.</p>
+    </div>
+
+    <!-- toast: manual popover, announced via status role -->
+    <div id="saved-toast" popover="manual" role="status">Changes saved.</div>
+    <button type="button" command="show-popover" commandfor="saved-toast">Save</button>
+  </main>
+</body>
+</html>

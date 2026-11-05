@@ -1,0 +1,61 @@
+<!doctype html>
+<!--
+  tabs — the APG tabs pattern: no native element exists, so ARIA + a small script own state + keyboard (Arrow/Home/End, roving tabindex, automatic activation). Without JS every panel stays visible (progressive enhancement). Consider headings + sections or details[name] first.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tabs – Templates</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <main id="main">
+    <h1>Account settings</h1>
+
+    <div class="tabs" data-tabs>
+      <div role="tablist" aria-label="Account settings">
+        <button type="button" role="tab" id="tab-profile" aria-controls="panel-profile" aria-selected="true">Profile</button>
+        <button type="button" role="tab" id="tab-billing" aria-controls="panel-billing" aria-selected="false" tabindex="-1">Billing</button>
+        <button type="button" role="tab" id="tab-security" aria-controls="panel-security" aria-selected="false" tabindex="-1">Security</button>
+      </div>
+      <section role="tabpanel" id="panel-profile" aria-labelledby="tab-profile" tabindex="0">
+        <h2>Profile</h2><p>Name, avatar and bio.</p>
+      </section>
+      <section role="tabpanel" id="panel-billing" aria-labelledby="tab-billing" tabindex="0" hidden>
+        <h2>Billing</h2><p>Plan and invoices.</p>
+      </section>
+      <section role="tabpanel" id="panel-security" aria-labelledby="tab-security" tabindex="0" hidden>
+        <h2>Security</h2><p>Password and two-factor authentication.</p>
+      </section>
+    </div>
+
+    <script type="module">
+      // State lives in aria-selected / hidden; CSS styles [aria-selected="true"].
+      for (const root of document.querySelectorAll("[data-tabs]")) {
+        const tabs = [...root.querySelectorAll('[role="tab"]')];
+        const select = (tab, focus = true) => {
+          for (const t of tabs) {
+            const on = t === tab;
+            t.setAttribute("aria-selected", String(on));
+            t.tabIndex = on ? 0 : -1;
+            document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+          }
+          if (focus) tab.focus();
+        };
+        root.addEventListener("click", (e) => {
+          const tab = e.target.closest('[role="tab"]');
+          if (tab) select(tab, false);
+        });
+        root.querySelector('[role="tablist"]').addEventListener("keydown", (e) => {
+          const i = tabs.indexOf(document.activeElement);
+          const next = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+          if (next === undefined) return;
+          e.preventDefault();
+          select(tabs[(next + tabs.length) % tabs.length]);
+        });
+      }
+    </script>
+  </main>
+</body>
+</html>

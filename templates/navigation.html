@@ -1,0 +1,67 @@
+<!doctype html>
+<!--
+  navigation — primary nav with aria-current, breadcrumbs (ordered list),
+  pagination, in-page table of contents. Each <nav> has a distinct label.
+  Site navigation is links in a list — never role="menu".
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Navigation patterns – Templates</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <header>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/products" aria-current="page">Products</a></li>
+        <li><a href="/pricing">Pricing</a></li>
+        <li>
+          <!-- sub-navigation without JS: disclosure -->
+          <details name="primary-subnav">
+            <summary>Resources</summary>
+            <ul>
+              <li><a href="/docs">Docs</a></li>
+              <li><a href="/blog">Blog</a></li>
+            </ul>
+          </details>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/">Home</a></li>
+        <li><a href="/products">Products</a></li>
+        <li><a href="/products/widgets" aria-current="page">Widgets</a></li>
+      </ol>
+    </nav>
+
+    <h1>Widgets</h1>
+    <p>…</p>
+
+    <nav class="pagination" aria-label="Pagination">
+      <ul>
+        <li><a href="?page=1" rel="prev">Previous<span class="visually-hidden"> page</span></a></li>
+        <li><a href="?page=1">1</a></li>
+        <li><a href="?page=2" aria-current="page">2</a></li>
+        <li><a href="?page=3">3</a></li>
+        <li><a href="?page=3" rel="next">Next<span class="visually-hidden"> page</span></a></li>
+      </ul>
+    </nav>
+  </main>
+
+  <footer>
+    <nav aria-label="Footer">
+      <ul>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+  </footer>
+</body>
+</html>

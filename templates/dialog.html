@@ -1,0 +1,57 @@
+<!doctype html>
+<!--
+  dialog — modal opened/closed with invoker commands (no JS), closedby light-dismiss (limited: Esc still works everywhere), form method=dialog returnValue, confirm dialog with request-close. Enter/exit animation lives in components.css.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dialog – Templates</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <main id="main">
+    <h1>Dialogs</h1>
+
+    <button type="button" class="primary" command="show-modal" commandfor="edit-dlg">Edit profile</button>
+
+    <dialog id="edit-dlg" aria-labelledby="edit-dlg-h" closedby="any">
+      <form method="dialog">
+        <header>
+          <h2 id="edit-dlg-h">Edit profile</h2>
+          <button type="button" class="ghost" command="close" commandfor="edit-dlg" aria-label="Close">✕</button>
+        </header>
+        <div>
+          <div class="field">
+            <label for="dlg-name">Display name</label>
+            <input id="dlg-name" name="name" type="text" autocomplete="nickname" autofocus>
+          </div>
+        </div>
+        <footer>
+          <button type="submit" value="cancel" formnovalidate>Cancel</button>
+          <button type="submit" value="save" class="primary">Save</button>
+        </footer>
+      </form>
+    </dialog>
+
+    <button type="button" class="danger" command="show-modal" commandfor="confirm-dlg">Delete project</button>
+
+    <dialog id="confirm-dlg" role="alertdialog" aria-labelledby="confirm-h" aria-describedby="confirm-d">
+      <header><h2 id="confirm-h">Delete “Roadmap”?</h2></header>
+      <div><p id="confirm-d">This permanently deletes the project and its 12 documents.</p></div>
+      <footer>
+        <button type="button" command="request-close" commandfor="confirm-dlg" value="cancel" autofocus>Keep project</button>
+        <button type="button" class="danger" command="close" commandfor="confirm-dlg" value="delete">Delete</button>
+      </footer>
+    </dialog>
+
+    <!--
+      Reading the result (only if you need it):
+      document.getElementById("confirm-dlg").addEventListener("close", (e) => {
+        if (e.target.returnValue === "delete") deleteProject();
+      });
+      Fallback where command/commandfor is unsupported: dialog.showModal() / dialog.close().
+    -->
+  </main>
+</body>
+</html>

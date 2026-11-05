@@ -1,149 +1,111 @@
 ---
 name: semantic-html
 description: |
-  Enforce semantic, accessible, reusable HTML5 + CSS, backed by a digested MDN
-  reference and a live MDN semantic-search index. Use whenever writing,
-  reviewing, refactoring, or auditing HTML/CSS: choosing the right element,
-  fixing div-soup, getting headings/landmarks/forms right, deciding native
-  element vs ARIA, or replacing JS widgets with CSS-native ones. Prefers
-  native HTML attributes (aria-, role-, data-*), WAI-ARIA done correctly, and
-  CSS-native styling over JS DOM manipulation. Blocks non-semantic and
-  deprecated markup. Reference: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference
+  Write, review and refactor semantic, accessible HTML5 and modern CSS, the
+  HTML/CSS-over-JS(X) way. Use whenever markup, styles or UI components are
+  written or audited: choosing the right element, checking the content model
+  (what may nest in what), fixing div-soup, headings and landmarks, forms and
+  labels, deciding native element vs ARIA, replacing JS widgets and JS
+  animation with native HTML (details, dialog, popover, invoker commands) and
+  CSS (@layer, nesting, :has(), container queries, @starting-style,
+  scroll-driven animations, view transitions), and structuring design tokens
+  and components (Semantic Nodes principles). Ships a generated MDN digest
+  (all elements with technical summaries, the full content-categories guide,
+  ARIA index, global attributes), copy-ready templates, and a zero-dependency
+  TypeScript MDN lookup (CLI + `mdn-search` MCP server).
 ---
 
-# Semantic HTML
+# Semantic HTML + modern CSS
 
-This skill makes HTML semantic, accessible, and clean — and keeps it that way
-when reviewing or refactoring. It pairs two things:
+**Meaning before markup, platform before script.** HTML is structure, CSS is
+presentation, and JS is behaviour the platform lacks. Choose elements for what
+things *are*, respect the content model, use native behaviour before ARIA or
+JS, style with layered CSS keyed to semantics and state, and animate in CSS.
 
-1. **Digested MDN reference that ships with the skill** (`references/`) — works
-   offline, no index or server needed. Covers the everyday decisions.
-2. **A live MDN semantic-search index** (zvec + sentence-transformers, exposed
-   as the `mdn-search` MCP server) for deep lookups the digest doesn't cover —
-   exact attributes, a role's owned-element contract, browser-compat, CSS
-   behavior.
+## Workflow
 
-Use the digest first; query the index when the digest doesn't answer it.
+1. **Writing markup.** Start from the closest template in `templates/`
+   (index in `templates/README.md`). Pick elements with
+   `references/elements/index.md`. Check nesting in
+   `references/content-categories.md`.
+2. **Reviewing or refactoring.** Run the decision procedure and the
+   anti-pattern tables in `references/rules.md`, then go through its review
+   checklist.
+3. **Something interactive** (toggle, modal, menu, tooltip, validation,
+   animation). Check `references/native-over-js.md` and
+   `references/motion.md` first. Use ARIA only through `references/aria.md`.
+4. **Styling.** Follow `references/css.md` (layers, nesting, tokens, semantic
+   selectors) and `references/design-system.md` (token taxonomy, component
+   rules), with `templates/styles/` as the reference implementation.
+5. **Anything the digest doesn't answer** (an attribute's exact behaviour, a
+   role's required children, Baseline status): look it up on MDN with the
+   tools below. Don't guess.
 
-## What "semantic" means here (core rules)
+## Core rules
 
-- **Meaning before markup.** Choose the element whose name matches what the
-  thing *is* (article, nav, button, list), not what it looks like. `<div>` and
-  `<span>` are the last resort, never the default.
-- **Respect the content model.** Elements have legal children (a `<p>` holds
-  only phrasing content; a `<ul>` holds only `<li>`). Invalid nesting silently
-  corrupts the accessibility tree. See `references/content-model.md`.
-- **Native first, then ARIA.** The first rule of ARIA is *don't use ARIA* if a
-  native element already has the semantics and behavior. No ARIA is better than
-  bad ARIA. See `references/aria.md`.
-- **CSS-native over JS.** Use `<details>`, `<dialog>`, popover, `:has()`,
-  `:target`, container queries, etc. before wiring click handlers and state.
-- **No deprecated/presentational markup.** No `<center>`, `<font>`, `<b>`/`<i>`
-  for meaning, `<br>` for layout, `<table>` for layout, `<div onclick>`.
-- **Keep it reusable and clean.** Lean DOM, meaningful class/`data-*` hooks,
-  styling in CSS (`@layer`, nesting) rather than inline or JS.
+- Use `<div>`/`<span>` only for meaning-free grouping. Use landmarks, one
+  `<main>`, headings in order, lists for lists, and tables for data.
+- Buttons act and links go. Never put `onclick` on a `div`, or use `href="#"`
+  for a button.
+- Every control has a label, related controls sit in a `fieldset`/`legend`,
+  and inputs use the right `type` and `autocomplete`.
+- Use the native element or attribute before ARIA. Never repeat an implicit
+  role. Keep ARIA states in sync, or use a native widget that does it for you.
+- Use `details`, `dialog`, `popover`, `command`/`commandfor`, `:has()` and
+  `:user-invalid` before JS state. In JSX, render the semantic element; props
+  carry meaning, not appearance; state goes in attributes and CSS reacts to
+  it.
+- CSS lives in `@layer reset, tokens, base, layout, components, utilities,
+  overrides`, with shallow native nesting, `--category-role-scale` tokens,
+  logical properties and container queries. No inline styles and no utility
+  soup.
+- Motion uses CSS transitions and keyframes, `@starting-style` +
+  `allow-discrete`, scroll-driven animations and view transitions, always
+  with `prefers-reduced-motion`. Use JS (WAAPI) only for gesture or physics
+  motion.
+- Flag Baseline status. Features marked **limited** in the references are
+  progressive enhancement and need a working fallback.
 
-## Bundled reference — read these first
+## References (`references/`)
 
-Read the file that matches the task; they're plain markdown, macro-free,
-regenerated from the MDN clone.
+| File | Kind | Read it when you need to… |
+| --- | --- | --- |
+| `rules.md` | curated | **start here**: the decision procedure, block-this/write-that tables, review checklist |
+| `elements/index.md` | generated | find the element for a meaning (all ~130, with implicit role and status) |
+| `elements/<group>.md` | generated | an element's technical summary (categories, permitted content and parents, tag omission, implicit and permitted roles, DOM interface) and attributes |
+| `content-categories.md` | generated | the full MDN *Content categories* guide, conditional membership, transparent model, element × category matrix |
+| `global-attributes.md` | generated | attributes valid on every element |
+| `aria.md` | curated | native-vs-ARIA decisions, naming, landmarks, live regions, patterns that still need ARIA |
+| `aria-index.md` | generated | element → implicit role map, all roles and states with one-liners |
+| `native-over-js.md` | curated | the platform feature that replaces your JS (with Baseline), JSX component rules |
+| `css.md` | curated | layers, nesting, tokens, semantic selectors, theming, layout, focus, `@scope` |
+| `motion.md` | curated | CSS-first animation: transitions, `@starting-style`, `::details-content`, scroll-driven, view transitions |
+| `design-system.md` | curated | Semantic Nodes concepts: tokens, atomic/molecular/layout components, minimal interfaces |
+| `forms.md` | curated | input types, `autocomplete` tokens, native validation, error pattern |
+| `accessibility.md` | curated | WCAG 2.2 AA essentials: alt text, focus, contrast, targets, testing |
 
-| File | Read it when you need to… |
-| --- | --- |
-| `references/patterns.md` | **Start here.** The decision procedure + an anti-pattern→fix table (block this, write that). The enforcement core. |
-| `references/elements.md` | Pick an element — all 128 HTML elements grouped by semantic function, with deprecated/non-standard/experimental flags. |
-| `references/content-model.md` | Check what may nest in what — the seven content categories + transparent model. |
-| `references/aria.md` | Decide native-vs-ARIA, look up the landmark→implicit-role map, or scan available roles/states. |
+## MDN lookup (TypeScript, zero runtime dependencies)
 
-For a quick read/review pass: skim `patterns.md`, fix what it flags, consult the
-others for specifics.
+Use the `mdn-search` MCP tools when they're available. Otherwise use the CLI.
+It needs Node ≥ 22.18 (native TypeScript) and nothing to install.
 
-## Deep lookups — the MDN semantic index
+| MCP tool | CLI | Use |
+| --- | --- | --- |
+| `get_element(name, full?)` | `node src/cli.ts element dialog [--full]` | technical summary and attributes for one element (live, cached) |
+| `search_mdn(query, topk?, prefix?)` | `node src/cli.ts search "…" [-k 8] [--prefix Web/CSS]` | ranked MDN section chunks with URLs |
+| `get_mdn_page(page, sections?)` | `node src/cli.ts page <slug\|url\|title> [-s accessibility]` | read any MDN page as Markdown |
+| `lookup_mdn_title(query)` | `node src/cli.ts title ":has()"` | find pages across all ~15k MDN docs |
+| `index_status()` / `reindex_mdn(embed?, scope?)` | `node src/cli.ts status` / `index [--embed]` | index state, rebuild |
 
-When the digest doesn't cover it, search the full MDN reference (HTML, CSS, JS,
-SVG, ARIA, HTTP, security). Reranked semantic search returns the relevant chunk
-text plus live MDN URLs.
+- `element`, `page` and `title` work immediately: they fetch MDN's rendered
+  page JSON and cache it under `~/.cache/semantic-html`.
+- `search` uses a local BM25 index over HTML, CSS, ARIA and accessibility
+  pages, which builds in about 2 minutes. The MCP server builds it in the
+  background on first start, and title matches are returned while it builds.
+  Running `npm install` (the optional `@huggingface/transformers`) followed by
+  `node src/cli.ts index --embed` turns on hybrid semantic search with
+  cross-encoder reranking.
+- Register the server: `claude mcp add mdn-search -- node <skill-dir>/src/mcp/server.ts`.
 
-### Preferred: the `mdn-search` MCP server
-
-Tools: `search_mdn(query, topk, rerank)`, `index_status()`, `reindex_mdn()`.
-The server auto-populates the index on first startup (background thread), so
-first run is zero-touch. If `mdn-search` tools are available in the session,
-prefer them over the CLI.
-
-```bash
-# Register once (Claude Code)
-claude mcp add mdn-search -- \
-  ~/.config/opencode/skills/semantic-html/.venv/bin/python \
-  ~/.config/opencode/skills/semantic-html/scripts/mcp_server.py
-```
-
-```jsonc
-// opencode.json
-"mcp": {
-  "mdn-search": {
-    "type": "local",
-    "command": [
-      "/Users/mia/.config/opencode/skills/semantic-html/.venv/bin/python",
-      "/Users/mia/.config/opencode/skills/semantic-html/scripts/mcp_server.py"
-    ]
-  }
-}
-```
-
-### CLI fallback
-
-```bash
-cd ~/.config/opencode/skills/semantic-html
-bash scripts/setup.sh                                   # venv + first ingest
-.venv/bin/python scripts/ingest_mdn.py --query "when to use <dialog> vs role=dialog"
-.venv/bin/python scripts/ingest_mdn.py --query "…" --no-rerank   # skip cross-encoder
-.venv/bin/python scripts/ingest_mdn.py --status
-.venv/bin/python scripts/ingest_mdn.py --reindex        # clean rebuild (refreshes the clone)
-```
-
-### Synapse viewer (3D)
-
-```bash
-.venv/bin/python scripts/viewer_server.py   # → http://localhost:7341
-```
-
-Live 3D navigator over the real index: PCA layout of actual embeddings, knn
-synapse links, reranked search splicing new nodes into the graph. Arrow keys
-traverse synapses, enter opens on MDN, drag orbits, pinch/wheel zooms.
-
-## Regenerating the digest
-
-The `references/*.md` files are derived from the same `mdn_content` clone the
-index uses. After a `--reindex` (which refreshes the clone), rebuild them:
-
-```bash
-.venv/bin/python scripts/build_references.py
-```
-
-This regenerates `elements.md`, `content-model.md`, and `aria.md` from the
-clone, and leaves the hand-curated `patterns.md` untouched.
-
-## Tools
-
-- `references/`: digested, offline, macro-free MDN reference (read these first).
-- `scripts/build_references.py`: regenerate the digest from the MDN clone.
-- `scripts/mdn_rag.py`: core RAG library — chunking, ingest, reranked search, status.
-- `scripts/mcp_server.py`: MCP stdio server (`mdn-search`); auto-populates on startup.
-- `scripts/ingest_mdn.py`: thin CLI over mdn_rag (`--query`, `--reindex`, `--status`).
-- `scripts/viewer_server.py`: HTTP server for the 3D synapse viewer.
-- `scripts/mdn-query.py`: open MDN + GitHub content search in a browser.
-- `scripts/setup.sh`: one-command environment setup.
-- `scripts/requirements.txt`: deps (`zvec`, `sentence-transformers`, `mcp`).
-
-## Implementation notes (hard-won)
-
-- zvec 0.4 has **no `commit()`** — persist with `collection.flush()` then
-  `collection.optimize()`.
-- `collection.stats` is a **property**, not a method.
-- Embedding + rerank models are local sentence-transformers (no API keys, no
-  daemons): `all-MiniLM-L6-v2` + `cross-encoder/ms-marco-MiniLM-L6-v2`. Override
-  via `SEMANTIC_HTML_EMBED_MODEL` / `SEMANTIC_HTML_RERANK_MODEL`; data dir via
-  `SEMANTIC_HTML_HOME`.
-- The digest extractor is pure stdlib — it runs without the venv, so the
-  offline reference is always rebuildable even if the RAG env breaks.
+Regenerate the digest after MDN changes with `npm run build:refs`. It rewrites
+only the generated files.
